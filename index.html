@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#09080d">
+	<meta name="description" content="Ragnarok Revelation: uma nova lenda está prestes a começar. Prepare-se para sua próxima aventura.">
+	<title>Ragnarok Revelation — Sua próxima lenda</title>
+	<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+	<video class="background-video" autoplay muted loop playsinline preload="metadata" poster="./assets/poster.jpg" aria-hidden="true">
+		<source src="./assets/background.mp4" type="video/mp4">
+	</video>
+	<div class="background-shade" aria-hidden="true"></div>
+	<div class="background-grain" aria-hidden="true"></div>
+	<a class="cinematic-link" href="./cinematic/index.html">ASSISTIR CINEMATIC COMPLETA</a>
+	<button class="audio-toggle" type="button" aria-label="Ativar áudio" aria-pressed="false" data-audio-toggle>
+		<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+		<span data-audio-label>ATIVAR ÁUDIO</span>
+	</button>
+
+	<div class="site-shell">
+		<header class="site-header">
+			<a class="brand" href="#inicio" aria-label="Ragnarok Revelation — início">
+				<span class="brand-mark" aria-hidden="true">
+					<svg viewBox="0 0 48 48" fill="none">
+						<path d="M24 3 39 9v12c0 10.2-6 18.5-15 24C15 39.5 9 31.2 9 21V9l15-6Z" stroke="currentColor" stroke-width="1.5"/>
+						<path d="M24 12v23M15 20h18M18 29l6-9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						<circle cx="24" cy="8" r="1.4" fill="currentColor"/>
+					</svg>
+				</span>
+				<span class="brand-name">RAGNAROK <strong>REVELATION</strong></span>
+			</a>
+			<span class="server-label"><span class="status-dot"></span> UM NOVO CAPÍTULO COMEÇA</span>
+		</header>
+
+		<main class="hero" id="inicio">
+			<div class="hero-content">
+				<p class="eyebrow"><span class="eyebrow-line"></span> RUNE-MIDGARD AGUARDA</p>
+				<h1>A lenda renasce<br><span>em você.</span></h1>
+				<p class="hero-description">Um mundo de aventuras, amizades e batalhas inesquecíveis está tomando forma. Sua próxima jornada começa aqui.</p>
+				<a class="hero-link" href="#sobre">
+					<span>CONHEÇA O REVELATION</span>
+					<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				</a>
+			</div>
+
+			<a class="scroll-cue" href="#sobre" aria-label="Role para conhecer o Revelation">
+				<span>DESCUBRA</span>
+				<span class="scroll-line"></span>
+			</a>
+
+			<div class="video-note"><span>01:53</span><span class="note-divider"></span><span>UMA JORNADA EM MOVIMENTO</span></div>
+		</main>
+
+		<section class="about" id="sobre" aria-label="Sobre o servidor">
+			<p>O Revelation está sendo preparado com carinho.<br><span>Em breve, mais detalhes sobre a aventura.</span></p>
+		</section>
+
+		<footer class="site-footer">
+			<span>RAGNAROK <strong>REVELATION</strong></span>
+			<span>UMA NOVA LENDA ESTÁ SENDO ESCRITA</span>
+		</footer>
+	</div>
+	<script src="./audio-toggle.js" defer></script>
+</body>
+</html>

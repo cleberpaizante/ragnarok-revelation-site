@@ -1,0 +1,33 @@
+.cinematic-page {
+	display: grid;
+	min-height: 100svh;
+	place-items: center;
+	background: #09080d;
+}
+
+.cinematic-player {
+	display: grid;
+	width: min(96vw, 1600px);
+	gap: 18px;
+	justify-items: center;
+}
+
+.cinematic-player video {
+	display: block;
+	width: 100%;
+	max-height: 86svh;
+	background: #000;
+	object-fit: contain;
+}
+
+.cinematic-back {
+	color: var(--gold-bright);
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: .16em;
+}
+
+.cinematic-back:focus-visible {
+	outline: 2px solid var(--gold-bright);
+	outline-offset: 5px;
+}
