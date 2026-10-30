@@ -17,7 +17,13 @@
 	</video>
 	<div class="background-shade" aria-hidden="true"></div>
 	<div class="background-grain" aria-hidden="true"></div>
-	<a class="cinematic-link" href="./cinematic/index.html" data-action-glow="gold">ASSISTIR CINEMATIC COMPLETA</a>
+	<a class="cinematic-thumbnail" href="./cinematic/index.html" aria-label="Assistir cinematic completa" data-action-glow="gold">
+		<img src="./assets/poster.jpg" alt="" aria-hidden="true">
+		<span class="cinematic-thumbnail__play" aria-hidden="true">
+			<svg viewBox="0 0 24 24" fill="none"><path d="m9 6 10 6-10 6V6Z" fill="currentColor"/></svg>
+		</span>
+		<span class="cinematic-thumbnail__label">ASSISTIR CINEMATIC COMPLETA</span>
+	</a>
 	<div class="audio-controls">
 		<button class="audio-toggle" type="button" aria-label="Ativar áudio" aria-pressed="false" data-audio-toggle data-action-glow="gold">
 			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -31,7 +37,7 @@
 
 	<div class="site-shell">
 		<header class="site-header">
-			<a class="brand" href="#inicio" aria-label="Ragnarok Revelation — início">
+			<a class="brand" href="./index.html" aria-label="Ragnarok Revelation — atualizar página">
 				<img class="brand-mark" src="./assets/logo.png" alt="" aria-hidden="true">
 				<span class="brand-name">RAGNAROK <strong>REVELATION</strong></span>
 			</a>
@@ -40,16 +46,17 @@
 
 		<main class="hero" id="inicio">
 			<div class="hero-content">
-				<p class="eyebrow"><span class="eyebrow-line"></span> RUNE-MIDGARD AGUARDA</p>
+				<p class="eyebrow"><span class="eyebrow-line"></span> UMA HOMENAGEM A RUNE-MIDGARD</p>
 				<h1>A lenda renasce<br><span>em você.</span></h1>
-				<p class="hero-description">Um mundo de aventuras, amizades e batalhas inesquecíveis está tomando forma. Sua próxima jornada começa aqui.</p>
+				<div class="hero-separator" aria-hidden="true"><span>✦</span></div>
+				<p class="hero-description">Uma nova jornada está prestes a começar. O mundo de Rune-Midgard espera por você.</p>
 				<button class="hero-link" type="button" data-action-glow="gold">
 					<span>CONHEÇA O REVELATION</span>
 					<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 				</button>
 				<nav class="account-links" aria-label="Acesso ao painel">
 					<button class="hero-link" type="button" data-action-glow="blue">ENTRAR / MINHA CONTA</button>
-					<button class="hero-link" type="button" data-action-glow="gold">CRIAR CONTA</button>
+					<button class="hero-link" type="button" data-action-glow="gold" data-signup-open>CRIAR CONTA</button>
 				</nav>
 				<nav class="community-links" aria-label="Mais opções">
 					<button class="hero-link" type="button" data-action-glow="cyan">BAIXAR O JOGO — EM BREVE</button>
@@ -70,6 +77,31 @@
 			<span>RAGNAROK <strong>REVELATION</strong></span>
 		</footer>
 	</div>
+	<section class="signup-screen" data-signup-screen role="dialog" aria-modal="true" aria-labelledby="signup-title" aria-hidden="true">
+		<div class="signup-panel">
+			<button class="signup-close" type="button" aria-label="Fechar cadastro" data-signup-close>×</button>
+			<p class="signup-eyebrow">REGISTRO DE AVENTUREIRO</p>
+			<h2 id="signup-title">Sua jornada começa aqui</h2>
+			<p class="signup-description">Preencha seus dados e prepare-se para acessar Rune-Midgard. O cadastro oficial será disponibilizado em breve.</p>
+			<form class="signup-form" data-signup-form>
+				<label>Nome de usuário<input name="username" autocomplete="username" required minlength="4" maxlength="23" pattern="[A-Za-z0-9_]+" data-signup-first></label>
+				<label>E-mail<input name="email_address" type="email" autocomplete="email" required maxlength="39"></label>
+				<label>Confirme o e-mail<input name="email_address2" type="email" autocomplete="email" required maxlength="39"></label>
+				<label>Senha<input name="password" type="password" autocomplete="new-password" required minlength="6" maxlength="31"></label>
+				<label>Confirme a senha<input name="confirm_password" type="password" autocomplete="new-password" required minlength="6" maxlength="31"></label>
+				<label>Sexo no jogo
+					<select name="gender" required>
+						<option value="">Selecione</option>
+						<option value="M">Masculino</option>
+						<option value="F">Feminino</option>
+					</select>
+				</label>
+				<label>Data de nascimento<input name="birthdate_date" type="date" autocomplete="bday" required></label>
+				<button class="signup-submit" type="submit" data-signup-submit>CRIAR CONTA</button>
+				<p class="signup-status" data-signup-status aria-live="polite"></p>
+			</form>
+		</div>
+	</section>
 	<script src="./audio-toggle.js" defer></script>
 </body>
 </html>
