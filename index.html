@@ -12,13 +12,22 @@
 	<video class="background-video" autoplay muted loop playsinline preload="metadata" poster="./assets/poster.jpg" aria-hidden="true">
 		<source src="./assets/background.mp4" type="video/mp4">
 	</video>
+	<video class="background-video background-video--ending" muted playsinline preload="none" aria-hidden="true">
+		<source src="./assets/ending-1080p.mp4" type="video/mp4">
+	</video>
 	<div class="background-shade" aria-hidden="true"></div>
 	<div class="background-grain" aria-hidden="true"></div>
-	<a class="cinematic-link" href="./cinematic/index.html">ASSISTIR CINEMATIC COMPLETA</a>
-	<button class="audio-toggle" type="button" aria-label="Ativar áudio" aria-pressed="false" data-audio-toggle>
-		<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-		<span data-audio-label>ATIVAR ÁUDIO</span>
-	</button>
+	<a class="cinematic-link" href="./cinematic/index.html" data-action-glow="gold">ASSISTIR CINEMATIC COMPLETA</a>
+	<div class="audio-controls">
+		<button class="audio-toggle" type="button" aria-label="Ativar áudio" aria-pressed="false" data-audio-toggle data-action-glow="gold">
+			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+			<span data-audio-label>ATIVAR ÁUDIO</span>
+		</button>
+		<label class="volume-control">
+			<span class="visually-hidden">Volume do vídeo</span>
+			<input type="range" min="0" max="100" value="70" aria-label="Volume do vídeo" data-video-volume>
+		</label>
+	</div>
 
 	<div class="site-shell">
 		<header class="site-header">
@@ -34,27 +43,21 @@
 				<p class="eyebrow"><span class="eyebrow-line"></span> RUNE-MIDGARD AGUARDA</p>
 				<h1>A lenda renasce<br><span>em você.</span></h1>
 				<p class="hero-description">Um mundo de aventuras, amizades e batalhas inesquecíveis está tomando forma. Sua próxima jornada começa aqui.</p>
-				<a class="hero-link" href="#sobre">
+				<button class="hero-link" type="button" data-action-glow="gold">
 					<span>CONHEÇA O REVELATION</span>
 					<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-				</a>
+				</button>
 				<nav class="account-links" aria-label="Acesso ao painel">
-					<a class="hero-link" href="http://localhost/index.php?module=account&amp;action=login">ENTRAR / MINHA CONTA</a>
-					<a class="hero-link" href="http://localhost/index.php?module=account&amp;action=create">CRIAR CONTA</a>
+					<button class="hero-link" type="button" data-action-glow="blue">ENTRAR / MINHA CONTA</button>
+					<button class="hero-link" type="button" data-action-glow="gold">CRIAR CONTA</button>
 				</nav>
 				<nav class="community-links" aria-label="Mais opções">
-					<button class="hero-link" type="button" disabled>BAIXAR O JOGO — EM BREVE</button>
-					<button class="hero-link" type="button" disabled>DISCORD — EM BREVE</button>
-					<a class="hero-link" href="http://localhost/index.php?module=server&amp;action=status">STATUS DO SERVIDOR</a>
+					<button class="hero-link" type="button" data-action-glow="cyan">BAIXAR O JOGO — EM BREVE</button>
+					<button class="hero-link" type="button" data-action-glow="purple">DISCORD — EM BREVE</button>
+					<button class="hero-link status-server" type="button" data-action-glow="green">STATUS DO SERVIDOR</button>
 				</nav>
 			</div>
 
-			<a class="scroll-cue" href="#sobre" aria-label="Role para conhecer o Revelation">
-				<span>DESCUBRA</span>
-				<span class="scroll-line"></span>
-			</a>
-
-			<div class="video-note"><span>01:53</span><span class="note-divider"></span><span>UMA JORNADA EM MOVIMENTO</span></div>
 		</main>
 
 		<section class="about" id="sobre" aria-label="Sobre o servidor">
@@ -65,7 +68,6 @@
 
 		<footer class="site-footer">
 			<span>RAGNAROK <strong>REVELATION</strong></span>
-			<span>UMA NOVA LENDA ESTÁ SENDO ESCRITA</span>
 		</footer>
 	</div>
 	<script src="./audio-toggle.js" defer></script>
