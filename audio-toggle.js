@@ -9,3 +9,20 @@ toggle.addEventListener("click", () => {
 	toggle.setAttribute("aria-label", audioEnabled ? "Desativar áudio" : "Ativar áudio");
 	label.textContent = audioEnabled ? "DESATIVAR ÁUDIO" : "ATIVAR ÁUDIO";
 });
+
+function resumeBackgroundVideo() {
+	if (!video.paused) {
+		return;
+	}
+
+	video.play().catch((error) => {
+		console.warn("Não foi possível retomar o vídeo de fundo.", error);
+	});
+}
+
+window.addEventListener("pageshow", resumeBackgroundVideo);
+document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState === "visible") {
+		resumeBackgroundVideo();
+	}
+});
