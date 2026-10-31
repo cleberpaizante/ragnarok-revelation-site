@@ -1,6 +1,6 @@
 # Ragnarok Revelation
 
-Site do **Ragnarok Revelation**, uma homenagem ao universo de Rune-Midgard. A página apresenta o projeto, sua identidade visual e uma cinematic em vídeo.
+Site do **Ragnarok Revelation**, uma homenagem ao universo de Rune-Midgard. A página apresenta o projeto, sua identidade visual e uma cinemática em vídeo.
 
 🌐 **Acesse o site:** [ragnarok-revelation-site.vercel.app](https://ragnarok-revelation-site.vercel.app)
 
@@ -10,7 +10,7 @@ O site é uma experiência estática feita com HTML, CSS e JavaScript, com víde
 
 - Página inicial responsiva com vídeo de fundo.
 - Controles de áudio e volume.
-- Página para assistir à cinematic completa.
+- Página para assistir à cinemática completa.
 - Apresentação da história e da identidade de Ragnarok Revelation.
 - Prévia de formulário de cadastro.
 
