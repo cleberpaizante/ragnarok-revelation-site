@@ -1,5 +1,6 @@
 const video = document.querySelector(".background-video");
-const endingVideo = document.querySelector(".background-video--ending");
+const backgroundEnding = document.querySelector(".background-ending");
+const backgroundGrain = document.querySelector(".background-grain");
 const backgroundShade = document.querySelector(".background-shade");
 const toggle = document.querySelector("[data-audio-toggle]");
 const label = toggle.querySelector("[data-audio-label]");
@@ -11,12 +12,13 @@ const signupClose = document.querySelector("[data-signup-close]");
 const signupForm = document.querySelector("[data-signup-form]");
 const signupStatus = document.querySelector("[data-signup-status]");
 const ENDING_START_TIME = 103;
-const LOOP_STOP_TIME = 105;
-const RESTART_DELAY_MS = 20000;
+const FINAL_FRAME_TIME = 106;
+const RESTART_DELAY_MS = 10000;
+const PLAYBACK_CHECK_DELAY_MS = 12000;
 const SHATTER_DURATION_MS = 6200;
-let endingVideoRequested = false;
-let endingVideoActive = false;
-let videoStoppedAtLimit = false;
+let videoWaitingToRestart = false;
+let playbackCheckTimeout;
+let playbackRecoveryPending = false;
 let clickAudioContext;
 let shatterTimeout;
 
@@ -43,7 +45,6 @@ const shardFlights = [
 ];
 
 video.volume = Number(volumeControl.value) / 100;
-endingVideo.volume = video.volume;
 
 function updateAudioToggle() {
 	const audioEnabled = !video.muted;
@@ -53,7 +54,10 @@ function updateAudioToggle() {
 }
 
 function updateBackgroundTint() {
-	backgroundShade.classList.toggle("is-normal", video.currentTime >= ENDING_START_TIME);
+	const isEnding = video.currentTime >= ENDING_START_TIME;
+	backgroundShade.classList.toggle("is-normal", isEnding);
+	backgroundGrain.classList.toggle("is-ending", isEnding);
+	video.classList.toggle("is-ending", isEnding);
 }
 
 function playButtonSound() {
@@ -109,104 +113,114 @@ document.addEventListener("animationend", (event) => {
 	}
 });
 
-function startEndingVideo() {
-	if (endingVideoActive || video.currentTime < ENDING_START_TIME || endingVideo.readyState < 2) {
+function restartVideoLoop() {
+	videoWaitingToRestart = false;
+	backgroundEnding.classList.remove("is-active");
+	video.currentTime = 0;
+	updateBackgroundTint();
+	resumeBackgroundVideo();
+}
+
+function holdFinalFrame() {
+	if (videoWaitingToRestart) {
 		return;
 	}
 
-	endingVideoActive = true;
-	endingVideo.currentTime = Math.max(0, video.currentTime - ENDING_START_TIME);
-	endingVideo.muted = video.muted;
+	videoWaitingToRestart = true;
+	window.clearTimeout(playbackCheckTimeout);
+	playbackCheckTimeout = undefined;
 	video.pause();
-	endingVideo.classList.add("is-active");
-	endingVideo.play().catch((error) => {
-		console.warn("Não foi possível reproduzir o trecho final em alta resolução.", error);
-		endingVideoActive = false;
-		endingVideo.classList.remove("is-active");
-		video.currentTime = 0;
-		video.play().catch((resumeError) => {
-			console.warn("Não foi possível retomar o vídeo de fundo.", resumeError);
-		});
-	});
-}
-
-function restartVideoLoop() {
-	videoStoppedAtLimit = false;
-	endingVideoActive = false;
-	endingVideo.classList.remove("is-active");
-	endingVideo.currentTime = 0;
-	video.currentTime = 0;
-	updateBackgroundTint();
-	video.play().catch((error) => {
-		console.warn("Não foi possível reiniciar o vídeo de fundo.", error);
-	});
-}
-
-function prepareEndingVideo() {
-	if (!endingVideoRequested && video.currentTime >= 100) {
-		endingVideoRequested = true;
-		endingVideo.load();
-	}
-
-	startEndingVideo();
+	video.currentTime = FINAL_FRAME_TIME;
+	backgroundEnding.classList.add("is-active");
+	window.setTimeout(restartVideoLoop, RESTART_DELAY_MS);
 }
 
 video.addEventListener("timeupdate", () => {
 	updateBackgroundTint();
-	prepareEndingVideo();
+	if (video.currentTime >= FINAL_FRAME_TIME) {
+		holdFinalFrame();
+	}
 });
 video.addEventListener("loadedmetadata", updateBackgroundTint);
 video.addEventListener("seeked", updateBackgroundTint);
-endingVideo.addEventListener("canplay", startEndingVideo);
-endingVideo.addEventListener("timeupdate", () => {
-	if (endingVideoActive && !videoStoppedAtLimit
-		&& endingVideo.currentTime >= LOOP_STOP_TIME - ENDING_START_TIME) {
-		videoStoppedAtLimit = true;
-		endingVideo.currentTime = LOOP_STOP_TIME - ENDING_START_TIME;
-		endingVideo.pause();
-		window.setTimeout(restartVideoLoop, RESTART_DELAY_MS);
-	}
-});
-endingVideo.addEventListener("ended", restartVideoLoop);
+video.addEventListener("ended", holdFinalFrame);
 
 toggle.addEventListener("click", () => {
 	video.muted = !video.muted;
-	endingVideo.muted = video.muted;
 	updateAudioToggle();
 });
 
 volumeControl.addEventListener("input", () => {
 	const volume = Number(volumeControl.value) / 100;
 	video.volume = volume;
-	endingVideo.volume = volume;
 	video.muted = volume === 0;
-	endingVideo.muted = video.muted;
 	updateAudioToggle();
 });
 
-function resumeBackgroundVideo() {
-	if (videoStoppedAtLimit) {
-		return;
-	}
-
-	const activeVideo = endingVideoActive ? endingVideo : video;
-	activeVideo.play().catch((error) => {
-		console.warn("Não foi possível retomar o vídeo de fundo.", error);
-		if (activeVideo === endingVideo) {
-			endingVideoActive = false;
-			endingVideo.classList.remove("is-active");
-			endingVideo.currentTime = 0;
-			video.currentTime = 0;
-			updateBackgroundTint();
-			video.play().catch((resumeError) => {
-				console.warn("Não foi possível retomar o vídeo de fundo.", resumeError);
+function playBackgroundVideo() {
+	video.play().catch((error) => {
+		if (error.name === "NotAllowedError" && !video.muted) {
+			console.warn("O navegador bloqueou o áudio automático; retomando o vídeo sem áudio.", error);
+			video.muted = true;
+			updateAudioToggle();
+			video.play().catch((retryError) => {
+				console.warn("Não foi possível retomar o vídeo de fundo sem áudio.", retryError);
 			});
+			return;
+		}
+		if (error.name !== "AbortError") {
+			console.warn("Não foi possível retomar o vídeo de fundo.", error);
 		}
 	});
 }
 
+function resumeBackgroundVideo() {
+	if (videoWaitingToRestart || playbackRecoveryPending || document.visibilityState !== "visible") {
+		return;
+	}
+
+	if (video.paused) {
+		playBackgroundVideo();
+	}
+
+	if (playbackCheckTimeout !== undefined) {
+		return;
+	}
+	const previousTime = video.currentTime;
+	playbackCheckTimeout = window.setTimeout(() => {
+		playbackCheckTimeout = undefined;
+		if (videoWaitingToRestart || document.visibilityState !== "visible"
+			|| video.currentTime > previousTime + 0.1) {
+			return;
+		}
+
+		console.warn("O vídeo de fundo não avançou; tentando recarregá-lo.");
+		playbackRecoveryPending = true;
+		const onRecoveryError = () => {
+			playbackRecoveryPending = false;
+			video.removeEventListener("loadedmetadata", onRecoveryReady);
+			console.warn("Não foi possível recarregar o vídeo de fundo.", video.error);
+		};
+		const onRecoveryReady = () => {
+			playbackRecoveryPending = false;
+			video.removeEventListener("error", onRecoveryError);
+			video.currentTime = previousTime;
+			if (!videoWaitingToRestart && document.visibilityState === "visible") {
+				playBackgroundVideo();
+			}
+		};
+		video.addEventListener("loadedmetadata", onRecoveryReady, { once: true });
+		video.addEventListener("error", onRecoveryError, { once: true });
+		video.load();
+	}, PLAYBACK_CHECK_DELAY_MS);
+}
+
 window.addEventListener("pageshow", resumeBackgroundVideo);
 window.addEventListener("focus", resumeBackgroundVideo);
+window.addEventListener("pagehide", () => {
+	window.clearTimeout(playbackCheckTimeout);
+	playbackCheckTimeout = undefined;
+});
 document.addEventListener("visibilitychange", () => {
 	if (document.visibilityState === "visible") {
 		resumeBackgroundVideo();

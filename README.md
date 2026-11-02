@@ -9,6 +9,7 @@ Site do **Ragnarok Revelation**, uma homenagem ao universo de Rune-Midgard. A p�
 O site é uma experiência estática feita com HTML, CSS e JavaScript, com vídeos e imagens locais. Ele inclui:
 
 - Página inicial responsiva com vídeo de fundo.
+- Pausa de 10 segundos na imagem final tratada, ajustada para preencher a tela, antes de reiniciar o vídeo de fundo. A imagem `assets/ending-frame.png` foi extraída aos 106 segundos de `assets/background.mp4`; se o vídeo for alterado, atualize também a imagem e os tempos em `audio-toggle.js`.
 - Controles de áudio e volume.
 - Página para assistir à cinemática completa.
 - Apresentação da história e da identidade de Ragnarok Revelation.
@@ -18,10 +19,10 @@ O site é uma experiência estática feita com HTML, CSS e JavaScript, com víde
 
 ## Executar localmente
 
-Você pode abrir `index.html` no navegador. Para testar com um servidor local, na pasta do projeto execute:
+Para testar localmente com suporte ao avanço da cinemática, execute na pasta do projeto:
 
 ```powershell
-py -m http.server 8000
+py preview_server.py
 ```
 
 Depois, acesse [http://localhost:8000](http://localhost:8000).

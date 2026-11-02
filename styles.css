@@ -40,6 +40,7 @@ a:focus-visible {
 }
 
 .background-video,
+.background-ending,
 .background-shade,
 .background-grain {
 	position: fixed;
@@ -54,17 +55,21 @@ a:focus-visible {
 	object-fit: cover;
 	object-position: center;
 	background: #09080d;
-	transition: transform .6s ease;
 }
 
-.background-video--ending {
+.background-video.is-ending {
+	transform: scale(1.186);
+}
+
+.background-ending {
+	z-index: 1;
+	overflow: hidden;
+	background: url("./assets/ending-frame.png") center / cover no-repeat;
 	opacity: 0;
-	transition: opacity .2s ease;
 }
 
-.background-video--ending.is-active {
+.background-ending.is-active {
 	opacity: 1;
-	transform: scale(1.18);
 }
 
 .cinematic-thumbnail {
@@ -265,6 +270,11 @@ a:focus-visible {
 	z-index: 2;
 	opacity: .12;
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+	transition: opacity .6s ease;
+}
+
+.background-grain.is-ending {
+	opacity: 0;
 }
 
 .site-shell {
