@@ -11,6 +11,9 @@ const signupScreen = document.querySelector("[data-signup-screen]");
 const signupClose = document.querySelector("[data-signup-close]");
 const signupForm = document.querySelector("[data-signup-form]");
 const signupStatus = document.querySelector("[data-signup-status]");
+const aboutTrigger = document.querySelector("[data-about-open]");
+const aboutScreen = document.querySelector("[data-about-screen]");
+const aboutCloseButtons = document.querySelectorAll("[data-about-close]");
 const ENDING_START_TIME = 103;
 const FINAL_FRAME_TIME = 106;
 const RESTART_DELAY_MS = 10000;
@@ -275,6 +278,33 @@ function closeSignupScreen() {
 	signupTrigger.focus();
 }
 
+function openAboutScreen() {
+	createShatterFragments();
+	document.body.classList.add("signup-open");
+	aboutScreen.classList.add("is-open");
+	aboutScreen.setAttribute("aria-hidden", "false");
+	siteShell.inert = true;
+	siteShell.classList.add("is-shattering");
+
+	window.clearTimeout(shatterTimeout);
+	shatterTimeout = window.setTimeout(() => {
+		siteShell.classList.add("is-hidden");
+		document.querySelectorAll(".shatter-fragment").forEach((fragment) => fragment.remove());
+		aboutCloseButtons[0].focus();
+	}, SHATTER_DURATION_MS);
+}
+
+function closeAboutScreen() {
+	window.clearTimeout(shatterTimeout);
+	aboutScreen.classList.remove("is-open");
+	aboutScreen.setAttribute("aria-hidden", "true");
+	document.body.classList.remove("signup-open");
+	siteShell.inert = false;
+	siteShell.classList.remove("is-shattering", "is-hidden");
+	document.querySelectorAll(".shatter-fragment").forEach((fragment) => fragment.remove());
+	aboutTrigger.focus();
+}
+
 signupTrigger.addEventListener("click", openSignupScreen);
 signupClose.addEventListener("click", closeSignupScreen);
 signupScreen.addEventListener("click", (event) => {
@@ -282,9 +312,19 @@ signupScreen.addEventListener("click", (event) => {
 		closeSignupScreen();
 	}
 });
+aboutTrigger.addEventListener("click", openAboutScreen);
+aboutCloseButtons.forEach((button) => button.addEventListener("click", closeAboutScreen));
+aboutScreen.addEventListener("click", (event) => {
+	if (event.target === aboutScreen) {
+		closeAboutScreen();
+	}
+});
 document.addEventListener("keydown", (event) => {
 	if (event.key === "Escape" && signupScreen.classList.contains("is-open")) {
 		closeSignupScreen();
+	}
+	if (event.key === "Escape" && aboutScreen.classList.contains("is-open")) {
+		closeAboutScreen();
 	}
 });
 signupForm.addEventListener("submit", (event) => {

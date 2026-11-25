@@ -6,7 +6,7 @@
 	<meta name="theme-color" content="#09080d">
 	<meta name="description" content="Ragnarok Revelation: uma nova lenda está prestes a começar. Prepare-se para sua próxima aventura.">
 	<title>Ragnarok Revelation — Sua próxima lenda</title>
-	<link rel="stylesheet" href="./styles.css?v=ending-20261102-3">
+	<link rel="stylesheet" href="./styles.css?v=about-scroll-20261125-1">
 </head>
 <body>
 	<video class="background-video" autoplay muted playsinline preload="metadata" poster="./assets/poster.jpg" aria-hidden="true">
@@ -48,7 +48,7 @@
 				<h1>A lenda renasce<br><span>em você.</span></h1>
 				<div class="hero-separator" aria-hidden="true"><span>✦</span></div>
 				<p class="hero-description">Uma nova jornada está prestes a começar. O mundo de Rune-Midgard espera por você.</p>
-				<button class="hero-link" type="button" data-action-glow="gold">
+				<button class="hero-link" type="button" data-action-glow="gold" data-about-open>
 					<span>CONHEÇA O REVELATION</span>
 					<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 				</button>
@@ -100,6 +100,19 @@
 			</form>
 		</div>
 	</section>
-	<script src="./audio-toggle.js?v=ending-20261102" defer></script>
+	<section class="about-screen" data-about-screen role="dialog" aria-modal="true" aria-labelledby="about-title" aria-hidden="true">
+		<article class="about-scroll" data-about-panel>
+			<button class="signup-close about-close" type="button" aria-label="Voltar à página" data-about-close>×</button>
+			<p class="about-scroll__eyebrow">UMA JORNADA DE FÃ PARA FÃ</p>
+			<h2 id="about-title">Uma paixão que virou aventura</h2>
+			<div class="about-scroll__copy">
+				<p>Revelation nasceu desse carinho e de um sonho antigo: criar uma aventura própria dentro de um universo que marcou tantas pessoas. É um projeto independente, feito por fã para fãs, que convida você a revisitar esse mundo e descobrir em detalhes uma parte de sua história: seus personagens, mistérios e acontecimentos.</p>
+				<p>Mas Revelation também propõe uma nova forma de viver a aventura. O Ragnarok clássico ganha uma experiência mais dinâmica, com ataques à distância, habilidades de empurrão, sistema de esquiva e progressão reequilibrada. Nos primeiros níveis, cada combate pode ser mais estratégico, envolvente e divertido — uma jornada familiar com novas possibilidades para explorar.</p>
+				<p>Uma homenagem às lembranças que nos trouxeram até aqui e uma aventura construída para descobrir o que vem a seguir. Let’s Rock! 🚀</p>
+			</div>
+			<button class="about-scroll__back" type="button" data-about-close>VOLTAR À PÁGINA</button>
+		</article>
+	</section>
+	<script src="./audio-toggle.js?v=about-scroll-20261125-1" defer></script>
 </body>
 </html>
