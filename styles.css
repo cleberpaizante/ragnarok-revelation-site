@@ -72,13 +72,12 @@ a:focus-visible {
 	opacity: 1;
 }
 
+.prologue-thumbnail,
 .cinematic-thumbnail {
 	position: fixed;
 	right: 28px;
-	bottom: 78px;
 	z-index: 3;
 	display: block;
-	width: min(250px, calc(100vw - 48px));
 	aspect-ratio: 16 / 9;
 	overflow: hidden;
 	border: 1px solid rgba(211, 178, 122, .64);
@@ -87,6 +86,17 @@ a:focus-visible {
 	transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
 }
 
+.cinematic-thumbnail {
+	bottom: 78px;
+	width: min(250px, calc(100vw - 48px));
+}
+
+.prologue-thumbnail {
+	bottom: 230px;
+	width: min(280px, calc(100vw - 48px));
+}
+
+.prologue-thumbnail::after,
 .cinematic-thumbnail::after {
 	position: absolute;
 	inset: 0;
@@ -95,6 +105,7 @@ a:focus-visible {
 	pointer-events: none;
 }
 
+.prologue-thumbnail img,
 .cinematic-thumbnail img {
 	display: block;
 	width: 100%;
@@ -140,23 +151,27 @@ a:focus-visible {
 	text-shadow: 0 1px 5px rgba(0, 0, 0, .8);
 }
 
+.prologue-thumbnail:hover,
 .cinematic-thumbnail:hover {
 	border-color: var(--gold-bright);
 	box-shadow: 0 0 24px rgba(211, 178, 122, .28), 0 10px 30px rgba(0, 0, 0, .5);
 	transform: translateY(-2px);
 }
 
+.prologue-thumbnail:hover img,
 .cinematic-thumbnail:hover img {
 	filter: brightness(.92) saturate(1);
 	transform: scale(1.055);
 }
 
+.prologue-thumbnail:hover .cinematic-thumbnail__play,
 .cinematic-thumbnail:hover .cinematic-thumbnail__play {
 	background: rgba(211, 178, 122, .3);
 	box-shadow: 0 0 18px rgba(238, 209, 155, .45);
 	transform: translate(-50%, -50%) scale(1.08);
 }
 
+.prologue-thumbnail:focus-visible,
 .cinematic-thumbnail:focus-visible {
 	outline: 2px solid var(--gold-bright);
 	outline-offset: 4px;
@@ -1049,6 +1064,12 @@ body.signup-open {
 		right: 20px;
 		bottom: 76px;
 		width: min(190px, calc(100vw - 40px));
+	}
+
+	.prologue-thumbnail {
+		right: 20px;
+		bottom: 194px;
+		width: min(210px, calc(100vw - 40px));
 	}
 
 	.cinematic-thumbnail__play {
